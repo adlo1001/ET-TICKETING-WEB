@@ -9,8 +9,8 @@ export const  NavBar =()=> {
 
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
-          <a className="navbar-brand" href="/home">
+        <nav className="navbar navbar-expand-lg  navbar-style">
+          <a className="navbar-brand text-white" href="/home">
             ET-TICKETING
           </a>
 
@@ -30,14 +30,14 @@ export const  NavBar =()=> {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
-             <li className="nav-item">
-                <Link to="/account" className="nav-link">
+             <li className="nav-item ">
+                <Link to="/account" className="nav-link text-white">
                   Login
                 </Link>
               </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administrator
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

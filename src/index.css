@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 .hightlight {
-    background-color: #80c0b5;
+    background-color: #1c93dd;
   }
   
   .navbar-style {
-    background-color: #0c8351 !important;
+    background-color: #2182BD !important;
   }
   
   .green-highlight {
-    color: #008000;
+    color:white;
     font-size: 40px;
   }
   
