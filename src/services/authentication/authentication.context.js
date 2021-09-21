@@ -1,6 +1,5 @@
 import React, { useState, createContext } from "react";
-import * as firebase from "firebase";
-
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import { loginRequest } from "./authentication.service";
 
 export const AuthenticationContext = createContext();
@@ -10,7 +9,8 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
-  firebase.auth().onAuthStateChanged((usr) => {
+  const auth = getAuth();
+  auth.onAuthStateChanged((usr) => {
     if (usr) {
       setUser(usr);
       setIsLoading(false);
@@ -20,11 +20,14 @@ export const AuthenticationContextProvider = ({ children }) => {
   });
 
   const onLogin = (email, password) => {
-    setIsLoading(true);
-    loginRequest(email, password)
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth,email, password)
       .then((u) => {
         setUser(u);
         setIsLoading(false);
+        setError("Login Success!");
+        window.open("/dashboard")?.focus();
+        
       })
       .catch((e) => {
         setIsLoading(false);
@@ -38,12 +41,13 @@ export const AuthenticationContextProvider = ({ children }) => {
       setError("Error: Passwords do not match");
       return;
     }
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
+    const auth = getAuth();
+      createUserWithEmailAndPassword(auth,email, password)
       .then((u) => {
         setUser(u);
         setIsLoading(false);
+        setError("Congratulations, User Successfully Created!");
+        return;
       })
       .catch((e) => {
         setIsLoading(false);
@@ -52,8 +56,8 @@ export const AuthenticationContextProvider = ({ children }) => {
   };
 
   const onLogout = () => {
-    firebase
-      .auth()
+    
+      auth
       .signOut()
       .then(() => {
         setUser(null);

@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import NavBar from "./infrastructure/navigation/nav-bar";
+import React, { Component} from "react";
+import { useState,useEffect, useCallback } from "react";
+import {NavBar} from "./infrastructure/navigation/nav-bar";
 import {HomeScreen} from "./screen/home.screen";
 import {AddStation} from "./components/stations.component";
 import {StationInfo} from "./components/station-info.component";
@@ -21,22 +22,55 @@ import {ManageTripsScreen} from "./components/manage.screens/trips.manage";
 import {ManageUsersScreen} from "./components/manage.screens/users.manage";
 import {ManageRoutesScreen} from "./components/manage.screens/routes.manage";
 import {Stations} from "./screen/details.screen/stations";
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { isLoggedIn: false };
-  }
+import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {   AuthenticationContextProvider } from "./services/authentication/authentication.context"; 
 
-  render() {
+
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDi8FwgAlI818nyuW-7WMUWa8BfmmiAAVQ",
+  authDomain: "et-ticketing-6b08a.firebaseapp.com",
+  projectId: "et-ticketing-6b08a",
+  storageBucket: "et-ticketing-6b08a.appspot.com",
+  messagingSenderId: "552968375475",
+  appId: "1:552968375475:web:7fcd30063418bca18eb4c6"
+
+};
+
+initializeApp(firebaseConfig);
+
+
+
+export default function App()  {
+  const[isAuthenticated, setIsAuthenticated]=useState(false);
+  const auth = getAuth();
+
+  useEffect(()=>{
+    
+    setTimeout(() => {
+        signInWithEmailAndPassword(auth,"adlo1001@test.com", "test1234")
+        .then((user) => {
+          setIsAuthenticated(true);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }, 2000);
+  },[]);
+
     return (
       <Router history={history}>
-        <NavBar/> 
+           <AuthenticationContextProvider>
+        <NavBar isAuthenticated={isAuthenticated}/> 
         <div className="container-fluid">
           <Switch>
-            <Route path="/login" exact component={LoginScreen}/>
+          {!isAuthenticated &&<Route path="/login" exact component={LoginScreen}/>}
             <Route path="/register" exact component={RegisterScreen}/>
             <Route path="/account" exact component={AccountScreen}/>
-            <Route path="/dashboard" exact component={DashboardScreen}/>
+            {isAuthenticated &&<Route path="/dashboard" exact component={DashboardScreen}/>}
             <Route path="/home" exact component={HomeScreen} />
             <Route path="/" exact component={HomeScreen} />
 
@@ -61,12 +95,9 @@ export default class App extends Component {
             <Route path="*" component={NoMatchPage} />
           </Switch>
         </div>
+        </AuthenticationContextProvider>
       </Router>
     );
   }
 
-  //This method can be called by child components to update isLoggedIn property of the state
-  updateIsLoggedInStatus = (status) => {
-    this.setState({ isLoggedIn: status });
-  };
-}
+

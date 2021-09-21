@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 
-class NavBar extends Component {
-  render() {
+export const  NavBar =(isAuthenticated)=> {
     return (
       <React.Fragment>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
@@ -25,7 +24,7 @@ class NavBar extends Component {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
+             <li className="nav-item">
                 <Link to="/account" className="nav-link">
                   Login
                 </Link>
@@ -41,12 +40,16 @@ class NavBar extends Component {
           </ul>
         </li>
 
+        {isAuthenticated &&<li className="nav-item text-right">
+                <Link to="/logout" className="nav-link">
+                  Logout
+                </Link>
+              </li>}
+
             </ul>
           </div>
         </nav>
       </React.Fragment>
     );
-  }
-}
+  };
 
-export default NavBar;
