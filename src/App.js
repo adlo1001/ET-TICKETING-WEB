@@ -38,6 +38,7 @@ export default class App extends Component {
             <Route path="/account" exact component={AccountScreen}/>
             <Route path="/dashboard" exact component={DashboardScreen}/>
             <Route path="/home" exact component={HomeScreen} />
+            <Route path="/" exact component={HomeScreen} />
 
             {/*EACH TASKS */}
             <Route path="/editstations" exact component={AddStation} />

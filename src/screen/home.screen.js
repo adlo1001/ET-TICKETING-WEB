@@ -3,15 +3,16 @@ import { BiCalendar} from "react-icons/bi"
 import {    BiBus } from "react-icons/bi";
 import {Search2,Search3} from "../components/search.component-2";
 import { StationInfo } from "../components/station-info.component";
-import {AddStation} from "../components/stations.component";
+import DatePicker from 'react-date-picker';
 
 
-export const HomeScreen=({onSendUser})=> {
+export const HomeScreen=()=> {
   const [stationList, setStationList]=useState([]);
   const [onboaridngQuery, setOnboardingQuery] = useState("");
   const [destinationQuery, setDestinationQuery] = useState("");
-  const [onboaridng, setOnboarding] = useState("");
+  const [onboariding, setOnboarding] = useState("");
   const [destination, setDestination] = useState("");
+  const [departureDate, onChange] = useState(new Date());
   
   const clearData ={
     onboarding:'',
@@ -19,6 +20,9 @@ export const HomeScreen=({onSendUser})=> {
  
 
 };
+const onSendTrip =()=>{
+
+}
 const formDataPublish =()=>{
   const tripInfo ={
 
@@ -26,7 +30,7 @@ const formDataPublish =()=>{
   destination:formData.destination,
 
   }
-  onSendUser(tripInfo);
+  onSendTrip(tripInfo);
 
 }
   const [formData, setFormData]=useState(clearData);
@@ -66,12 +70,25 @@ const formDataPublish =()=>{
         <BiBus className="inline-block text-red-400 align-top" />Bus Trips</h1>
         <h5 className="text-1xl mb-3">
         Book Ticket</h5>
-      <Search2 query={onboaridngQuery} onQueryChange={(myquery1)=>{setOnboardingQuery(myquery1);setOnboarding(myquery1[0])}}/>
-      <Search3 query={destinationQuery} onQueryChange={(myquery2)=>setDestinationQuery(myquery2)}/>
+        <div className="mt-1 relative rounded-md shadow-sm border-blue-300 bg-gray-100 ">
+        <h5 className="text-1xl mb-3" href="#">  
+        Enter Onboarding and Destination</h5>
+        
+      <Search2 query={onboaridngQuery} value={onboariding} onQueryChange={(myquery1)=>{setOnboardingQuery(myquery1)}}/>
+      <Search3 query={destinationQuery} value={destination} onQueryChange={(myquery2)=>setDestinationQuery(myquery2)}/>
+      </div>
+     
+      <h5 className="text-1xl mb-3" href="#">  
+        Choose Departure Date</h5>
+        <DatePicker
+        onChange={onChange}
+        value={departureDate}
+      >Choose Departure Date</DatePicker>
+   
 
       <div className="pt-5">
             <div className="flex justify-end">
-              <button type="submit"  onClick={()=>{formDataPublish()}}className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+              <button type="submit"  onClick={()=>{formDataPublish();setDestination("");setOnboarding("");}}className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
                 Submit
               </button>
             </div>
@@ -86,6 +103,9 @@ const formDataPublish =()=>{
                 stationId =>
                 setStationList(stationList.filter(station=>
                   station.id !== stationId ))}
+                  onChooseStation={
+                    stationId =>
+                    setOnboarding(stationId)}
             />
           ))
         }
@@ -98,7 +118,9 @@ const formDataPublish =()=>{
               onDeleteStation={
                 stationId =>
                 setStationList(stationList.filter(station=>
-                  station.id !== stationId ))}
+                  station.id !== stationId ))}  onChooseStation={
+                    stationId =>
+                    setDestination(stationId)} 
             />
           ))
         }
@@ -107,4 +129,3 @@ const formDataPublish =()=>{
     </div>
   );
 }
-

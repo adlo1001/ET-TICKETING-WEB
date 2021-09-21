@@ -1,6 +1,7 @@
-import { BiTrash } from "react-icons/bi"
+import { BiTrash,BiAddToQueue } from "react-icons/bi"
 
-export const StationInfo = ({ station ,onDeleteStation}) => {
+
+export const StationInfo = ({ station ,onDeleteStation, onChooseStation}) => {
   return (
     <li className="px-3 py-3 flex items-start">
       <button onClick={()=>onDeleteStation(station.id)} type="button"
@@ -16,6 +17,10 @@ export const StationInfo = ({ station ,onDeleteStation}) => {
         <div className="leading-tight">{station.province}</div>
         <div className="leading-tight">{station.description}</div>
       </div>
+            <div>
+      <button onClick={()=>onChooseStation(station.id)} type="button" 
+        className="p-1.5 mr-1.5 mt-1 rounded text-white bg-blue-400 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <BiAddToQueue /></button>  </div>
     </li>
   )
 };
