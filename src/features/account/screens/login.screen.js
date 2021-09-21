@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
-
+import ActivityIndicator from 'react-activity-indicator';
   export const LoginScreen = ({onSendUser}) => {
     const clearData ={
       email:'',
@@ -52,14 +52,14 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
             <h5 variant="error">{error}</h5>
           </div>
         )}
-  
+     { !isLoading?(
             <div className="pt-5">
             <div className="flex justify-end">
               <button type="submit"  onClick={()=>{formDataPublish()}} className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
                 Submit
               </button>
             </div>
-          </div>
+          </div>):(<ActivityIndicator number={10} duration={200} activeColor="#0070bf" borderWidth={2} borderRadius="50%" diameter={25} />) }
           </div>
       
       

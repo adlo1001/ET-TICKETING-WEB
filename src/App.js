@@ -6,7 +6,8 @@ import {AddStation} from "./components/stations.component";
 import {StationInfo} from "./components/station-info.component";
 import { Route, Switch } from "react-router";
 import { Router } from "react-router-dom";
-import NoMatchPage from "./components/no-match-page"
+import NoMatchPage from "./components/no-match-page";
+import YetMatchPage from "./components/not-yet-match-page";
 import history from "./components/history";
 import {AddRoute} from "./components/routes.component";
 import { AccountScreen } from "./features/account/screens/account.screen";
@@ -47,6 +48,7 @@ initializeApp(firebaseConfig);
 export default function App()  {
   const[isAuthenticated, setIsAuthenticated]=useState(false);
   const auth = getAuth();
+  const [isLoading, setIsLoading]= useState(true);
 
   useEffect(()=>{
     
@@ -54,6 +56,7 @@ export default function App()  {
         signInWithEmailAndPassword(auth,"adlo1001@test.com", "test1234")
         .then((user) => {
           setIsAuthenticated(true);
+          setIsLoading(false);
         })
         .catch((e) => {
           console.log(e);
@@ -92,7 +95,9 @@ export default function App()  {
             <Route path="/managecompanies" exact component={ManageCompaniesScreen} />
             <Route path="/managepassengers" exact component={ManagePassengersScreen} />
             <Route path="/manageroutes" exact component={ManageRoutesScreen} />
-            <Route path="*" component={NoMatchPage} />
+            {isLoading && (<Route path="*" component={YetMatchPage}/> )}
+            {!isLoading && (<Route path="*" component={NoMatchPage} />)}
+           
           </Switch>
         </div>
         </AuthenticationContextProvider>

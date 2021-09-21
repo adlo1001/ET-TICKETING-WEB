@@ -1,8 +1,12 @@
-import React, { Component } from "react";
+import React, { Component,useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthenticationContext } from "../../services/authentication/authentication.context";
+import ActivityIndicator from 'react-activity-indicator';
 
 
-export const  NavBar =(isAuthenticated)=> {
+export const  NavBar =()=> {
+  const { isAuthenticated,onLogout, error, isLoading } = useContext(AuthenticationContext);
+
     return (
       <React.Fragment>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
@@ -21,6 +25,8 @@ export const  NavBar =(isAuthenticated)=> {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+          
+      
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
@@ -40,11 +46,16 @@ export const  NavBar =(isAuthenticated)=> {
           </ul>
         </li>
 
-        {isAuthenticated &&<li className="nav-item text-right">
-                <Link to="/logout" className="nav-link">
-                  Logout
-                </Link>
-              </li>}
+     
+        {isAuthenticated &&  <div className="pt-1" >
+            <div className="justify-end">
+              <button type="submit"  onClick={()=>{onLogout()}}
+                className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                Logout
+              </button>
+            </div>
+          </div>}
+
 
             </ul>
           </div>

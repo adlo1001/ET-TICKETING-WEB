@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
-
+import ActivityIndicator from 'react-activity-indicator';
   export const RegisterScreen = ({onSendUser}) => {
     const clearData ={
       email:'',
@@ -52,12 +52,14 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
               Repeat Password:
             </label>
+            {!isLoading ? (
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input type="password" name="repeatedPassword" id="repeatedPassword"
                onChange={(event)=>{setFormData({...formData, repeatedPassword:event.target.value})}}
                value={formData.repeatedPassword}
                 className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" />
-            </div>
+            </div>):(<ActivityIndicator number={10} duration={200} activeColor="#0070bf" borderWidth={2} borderRadius="50%" diameter={25} />) }
+        
             {error && (
           <div size="large">
             <h5 variant="error">{error}</h5>
