@@ -1,36 +1,9 @@
 import { BiSearch, BiCaretDown, BiCheck } from "react-icons/bi"
 import { useState } from 'react';
 
-const DropDown = ({ toggle }) => {
-  if (!toggle) {
-    return null;
-  }
-  return (
-    <div className="origin-top-right absolute right-0 mt-2 w-56
-      rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-      <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem">Station Name <BiCheck /></div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem">City  <BiCheck /></div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem">Region <BiCheck /></div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer border-gray-1 border-t-2"
-          role="menuitem">Asc <BiCheck /></div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem">Desc <BiCheck /></div>
-      </div>
-    </div>
-  )
-}
 
 export const Search2 = ({ query,val, onQueryChange }) => {
-  let [toggleSort, setToggleSort] = useState(false);
+  const [val1, setVal1]=useState(val);
   return (
     <div className="py-1">
       <div className="mt-1 relative rounded-md shadow-sm">
@@ -38,8 +11,8 @@ export const Search2 = ({ query,val, onQueryChange }) => {
           <BiSearch />
           <label htmlFor="query1" className="sr-only" />
         </div>
-        <input type="text" name="query1" id="query1" value={query}
-          onChange={(event) =>  {onQueryChange(event.target.value)} }
+        <input type="text" name="query1" id="query1"  value={val}
+          onChange={(event) =>  {onQueryChange(event.target.value);} }
           className="pl-8 rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300" placeholder="Search for onbaording Station/city. for example. Meskel Square" />
 
       </div>
@@ -48,8 +21,7 @@ export const Search2 = ({ query,val, onQueryChange }) => {
 }
 
 
-export const Search3 = ({ query, onQueryChange }) => {
-  let [toggleSort, setToggleSort] = useState(false);
+export const Search3 = ({ query, val, onQueryChange }) => {
   return (
     <div className="py-5">
       <div className="mt-1 relative rounded-md shadow-sm">
@@ -57,7 +29,7 @@ export const Search3 = ({ query, onQueryChange }) => {
           <BiSearch />
           <label htmlFor="query2" className="sr-only" />
         </div>
-        <input type="text" name="query2" id="query2" value={query}
+        <input type="text" name="query2" id="query2" value={val}
           onChange={(event) =>  {onQueryChange(event.target.value)} }
           className="pl-8 rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300" placeholder="Search for Destination Station. for example. Hawassa" />
       </div>

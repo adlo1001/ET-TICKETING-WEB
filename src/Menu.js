@@ -5,10 +5,8 @@ import {HomeScreen} from "./screen/home.screen";
 import {AddStation} from "./components/stations.component";
 import {StationInfo} from "./components/station-info.component";
 import { Route, Switch } from "react-router";
-import { Router } from "react-router-dom";
 import NoMatchPage from "./components/no-match-page";
 import YetMatchPage from "./components/not-yet-match-page";
-import history from "./components/history";
 import {AddRoute} from "./components/routes.component";
 import { AccountScreen } from "./features/account/screens/account.screen";
 import { LoginScreen } from "./features/account/screens/login.screen";
@@ -26,37 +24,46 @@ import {Stations} from "./screen/details.screen/stations";
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {   AuthenticationContextProvider, AuthenticationContext } from "./services/authentication/authentication.context"; 
-import Menu from "./Menu";
 
 
 
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDi8FwgAlI818nyuW-7WMUWa8BfmmiAAVQ",
-  authDomain: "et-ticketing-6b08a.firebaseapp.com",
-  projectId: "et-ticketing-6b08a",
-  storageBucket: "et-ticketing-6b08a.appspot.com",
-  messagingSenderId: "552968375475",
-  appId: "1:552968375475:web:7fcd30063418bca18eb4c6"
-
-};
-
-initializeApp(firebaseConfig);
-
-
-
-export default function App()  {
- 
- 
-
+export default function Menu()  {
+  const { isAuthenticated,onLogout, error, isLoading } = useContext(AuthenticationContext);
 
     return (
-      <Router history={history}>
-           <AuthenticationContextProvider>
-        <NavBar/> 
-        <Menu/>
-        </AuthenticationContextProvider>
-      </Router>
+        <div className="container-fluid">
+          <Switch>
+          {!isAuthenticated &&<Route path="/login" exact component={LoginScreen}/>}
+            <Route path="/register" exact component={RegisterScreen}/>
+            <Route path="/account" exact component={AccountScreen}/>
+            {isAuthenticated &&<Route path="/dashboard" exact component={DashboardScreen}/>}
+            <Route path="/home" exact component={HomeScreen} />
+            <Route path="/" exact component={HomeScreen} />
+
+            {/*EACH TASKS */}
+            <Route path="/editstations" exact component={AddStation} />
+            <Route path="/allstations" exact component={Stations} />
+
+            <Route path="/editroutes" exact component={AddRoute} />
+            <Route path="/editstations" exact component={AddStation} />
+
+
+
+            {/*MANAGE */}
+            <Route path="/managestations" exact component={ManageStationsScreen} />
+            <Route path="/managetickets" exact component={ManageTicketsScreen} />
+            <Route path="/managetransportations" exact component={ManageTransportationsScreen} />
+            <Route path="/manageTrips" exact component={ManageTripsScreen} />
+            <Route path="/manageUsers" exact component={ManageUsersScreen} />
+            <Route path="/managecompanies" exact component={ManageCompaniesScreen} />
+            <Route path="/managepassengers" exact component={ManagePassengersScreen} />
+            <Route path="/manageroutes" exact component={ManageRoutesScreen} />
+            {isLoading&&isAuthenticated&& (<Route path="*" component={YetMatchPage}/> )}
+            {!isLoading && (<Route path="*" component={NoMatchPage} />)}
+           
+          </Switch>
+        </div>
+
     );
   }
 

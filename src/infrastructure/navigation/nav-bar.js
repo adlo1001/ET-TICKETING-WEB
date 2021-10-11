@@ -30,11 +30,12 @@ export const  NavBar =()=> {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
+            {!isAuthenticated && 
              <li className="nav-item ">
                 <Link to="/account" className="nav-link text-white">
                   Login
                 </Link>
-              </li>
+              </li>}
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -42,7 +43,7 @@ export const  NavBar =()=> {
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="/dashboard">Dashboard </a></li>
-            <li><a class="dropdown-item" href="/account">Login </a></li>
+            {!isAuthenticated &&  <li><a class="dropdown-item" href="/account">Login </a></li>}
           </ul>
         </li>
 

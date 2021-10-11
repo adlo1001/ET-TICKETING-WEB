@@ -63,14 +63,14 @@ export const AuthenticationContextProvider = ({ children }) => {
       .then(() => {
         setUser(null);
         setError(null);
-        window.open("/login")?.focus();
+      // window.open("/login")?.focus();
       });
   };
 
   return (
     <AuthenticationContext.Provider
       value={{
-        isAuthenticated: !!user,
+        isAuthenticated:!!user,
         user,
         isLoading,
         error,

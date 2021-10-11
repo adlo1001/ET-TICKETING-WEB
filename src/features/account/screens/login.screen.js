@@ -8,6 +8,7 @@ import ActivityIndicator from 'react-activity-indicator';
 
   
   };
+  
   const { onLogin, error ,isLoading } = useContext(AuthenticationContext);
   const formDataPublish =()=>{
     const userInfo ={
@@ -21,7 +22,6 @@ import ActivityIndicator from 'react-activity-indicator';
     const [formData, setFormData]=useState(clearData);
     return (
       <div className="flex justify-center">
-
       <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start  sm:pt-5">
       <label htmlFor="email" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
       <h1>Login</h1>
