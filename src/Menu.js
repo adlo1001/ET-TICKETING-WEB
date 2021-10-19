@@ -24,7 +24,8 @@ import {Stations} from "./screen/details.screen/stations";
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {   AuthenticationContextProvider, AuthenticationContext } from "./services/authentication/authentication.context"; 
-
+import { RoutesScreen } from "./components/manage.screens/edit/edit-routes";
+import { TransScreen } from "./components/manage.screens/edit/trans";
 
 
 export default function Menu()  {
@@ -44,10 +45,11 @@ export default function Menu()  {
             <Route path="/editstations" exact component={AddStation} />
             <Route path="/allstations" exact component={Stations} />
 
-            <Route path="/editroutes" exact component={AddRoute} />
+            <Route path="/editroutes" exact component={RoutesScreen} />
             <Route path="/editstations" exact component={AddStation} />
+            <Route path="/edittransporations" exact component={TransScreen} />
 
-
+    
 
             {/*MANAGE */}
             <Route path="/managestations" exact component={ManageStationsScreen} />
