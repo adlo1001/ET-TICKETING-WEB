@@ -25,7 +25,18 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {   AuthenticationContextProvider, AuthenticationContext } from "./services/authentication/authentication.context"; 
 import { RoutesScreen } from "./components/manage.screens/edit/edit-routes";
-import { TransScreen } from "./components/manage.screens/edit/trans";
+import { TransScreen } from "./components/manage.screens/edit/edit-trans";
+import { TripsScreen } from "./components/manage.screens/edit/edit-trips";
+import { TicketsScreen } from "./components/manage.screens/edit/edit-tickets";
+import { CompanyScreen } from "./components/manage.screens/edit/edit-companies";
+import { AllTickets } from "./components/display.screens/all-tickets";
+import { AllStations } from "./components/display.screens/all-stations";
+import { AllRoutes } from "./components/display.screens/all-routes";
+import { AllCompanies, ALLCompanies } from "./components/display.screens/all-companies";
+import { AllTrans } from "./components/display.screens/all-trans";
+import {AllTrips} from "./components/display.screens/all-trips";
+import { AllUsers } from "./components/display.screens/all-users";
+import { AllPassengers } from "./components/display.screens/all-passengers";
 
 
 export default function Menu()  {
@@ -43,14 +54,26 @@ export default function Menu()  {
 
             {/*EACH TASKS */}
             <Route path="/editstations" exact component={AddStation} />
-            <Route path="/allstations" exact component={Stations} />
+            {/*<Route path="/allstations" exact component={Stations} />*/}
 
             <Route path="/editroutes" exact component={RoutesScreen} />
             <Route path="/editstations" exact component={AddStation} />
             <Route path="/edittransporations" exact component={TransScreen} />
+            <Route path="/edittrips" exact component={TripsScreen} />
+            <Route path="/edittickets" exact component={TicketsScreen} />
+            <Route path="/editcompanies" exact component={CompanyScreen} />
 
-    
 
+           {/*DISPLAY */}
+            <Route path="/alltickets" exact component={AllTickets} />
+            <Route path="/alltrips" exact component={AllTrips} />
+            <Route path="/allstations" exact component={AllStations} />
+            <Route path="/allroutes" exact component={AllRoutes} />
+            <Route path="/allcompanies" exact component={AllCompanies } />
+            <Route path="/alltransporations" exact component={AllTrans } />    
+            <Route path="/allusers" exact component={AllUsers } /> 
+            <Route path="/allpassengers" exact component={AllPassengers } />  
+       
             {/*MANAGE */}
             <Route path="/managestations" exact component={ManageStationsScreen} />
             <Route path="/managetickets" exact component={ManageTicketsScreen} />

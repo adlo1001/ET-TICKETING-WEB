@@ -17,6 +17,8 @@ export const HomeScreen=()=> {
   const [isQueryBoarding, setIsQueryBoarding]=useState(false);
   const [isQueryDestination, setIsQueryDestination]=useState(false);
   const [departureDate, onChange] = useState(new Date());
+
+  const [error, setError] = useState(null);
   
   const clearData ={
     onboarding:'',
@@ -24,6 +26,8 @@ export const HomeScreen=()=> {
  
 
 };
+const [formData, setFormData]=useState(clearData);
+
 const onSendTrip =(tripinfo)=>{
   return (
     <div className="container-fluid">
@@ -39,8 +43,7 @@ const formDataPublish =()=>{
   }
   onSendTrip(tripInfo);
 }
-  const [formData, setFormData]=useState(clearData);
-  const [error, setError] = useState(null);
+
 
   const filteredStations1 = stationList.filter(
     item => {

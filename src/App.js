@@ -27,6 +27,8 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {   AuthenticationContextProvider, AuthenticationContext } from "./services/authentication/authentication.context"; 
 import Menu from "./Menu";
+import { StationsContextProvider } from "./services/stations/stations.context";
+import { TripsContextProvider } from "./services/trips/trips.context";
 
 
 
@@ -52,10 +54,17 @@ export default function App()  {
 
     return (
       <Router history={history}>
+       
+       <StationsContextProvider>
+          <TripsContextProvider>
+  
            <AuthenticationContextProvider>
         <NavBar/> 
         <Menu/>
         </AuthenticationContextProvider>
+        
+        </TripsContextProvider>
+        </StationsContextProvider>
       </Router>
     );
   }
