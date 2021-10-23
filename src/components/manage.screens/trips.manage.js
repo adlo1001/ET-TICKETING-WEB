@@ -2,6 +2,7 @@
 
   export const ManageTripsScreen = () => {
  
+    console.log(this.props.match.params);
     return (
       <div className="flex justify-center">
       

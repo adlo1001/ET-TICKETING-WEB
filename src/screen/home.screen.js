@@ -1,44 +1,54 @@
-import { useState,useEffect, useCallback } from "react";
+import { useState,useEffect, useCallback, useContext } from "react";
 import { BiCalendar} from "react-icons/bi"
-import { Route} from "react-router";
+import { Redirect, Route} from "react-router";
 import { BiBus} from "react-icons/bi";
 import {Search2,Search3} from "../components/search.component-2";
 import { StationInfo } from "../components/station-info.component";
 import DatePicker from 'react-date-picker';
 import { ManageTripsScreen } from "../components/manage.screens/trips.manage";
+import {StationsContext}  from "../services/stations/stations.context";
+import {TripsContext} from "../services/trips/trips.context";
+import {AllTrips} from "../components/display.screens/all-trips";
 
 
 export const HomeScreen=()=> {
-  const [stationList, setStationList]=useState([]);
-  const [onboaridngQuery, setOnboardingQuery] = useState("");
-  const [destinationQuery, setDestinationQuery] = useState("");
+  const {stationList,keyword1, keyword2}=useContext(StationsContext);
+  const {onTripsSearch} =useContext(TripsContext);
+  const [onboaridngQuery, setOnboardingQuery] = useState(keyword1);
+  const [destinationQuery, setDestinationQuery] = useState(keyword2);
   const [onboarding, setOnboarding] = useState("");
   const [destination, setDestination] = useState("");
   const [isQueryBoarding, setIsQueryBoarding]=useState(false);
   const [isQueryDestination, setIsQueryDestination]=useState(false);
   const [departureDate, onChange] = useState(new Date());
 
+  
+
   const [error, setError] = useState(null);
   
   const clearData ={
     onboarding:'',
     destination:'',
+    departureDate:null,
  
 
 };
 const [formData, setFormData]=useState(clearData);
 
 const onSendTrip =(tripinfo)=>{
+  window.open("/alltickets")?.focus();
+{/*
   return (
     <div className="container-fluid">
-     <Route path="/manageTrips" exact component={ManageTripsScreen}/>
+     <Route exact path="/manageTrips/:onboarding/:destination/:daprtureDate"  component={AllTrips}/>
     </div>
-  );
+  );*/}
 }
 const formDataPublish =()=>{
   const tripInfo ={
   onboarding: formData.onboarding,
   destination:formData.destination,
+  departureDate:formData.departureDate,
 
   }
   onSendTrip(tripInfo);
@@ -64,15 +74,6 @@ const formDataPublish =()=>{
     }
   )
 
-  const fetchData=useCallback(()=>{
-  fetch('./stations.json')
-  .then(response =>response.json())
-  .then(data=>
-    {setStationList(data)})
-
-  },[]);
-
-  useEffect(()=>{fetchData()},[fetchData]);
 
   return (
     <div className="App container mx-auto mt-3 font-thin">
@@ -104,7 +105,8 @@ const formDataPublish =()=>{
             <div className="flex justify-end">
               <button type="submit" 
                onClick={()=>{
-                if(!!destination && !!onboarding) 
+                 
+                if(destination!=="" && onboarding!=="" &&departureDate!==null) 
                 {formDataPublish();
                   setError(null);
     
@@ -123,10 +125,7 @@ const formDataPublish =()=>{
           .map(station => (
             <StationInfo key={station.id}
               station={station}
-              onDeleteStation={
-                stationId =>
-                setStationList(stationList.filter(station=>
-                  station.id !== stationId ))}
+          
                   onChooseStation={
                     stationId =>
                     setOnboarding(station.stationName +"  " +stationId)}
@@ -139,10 +138,7 @@ const formDataPublish =()=>{
           .map(station => (
             <StationInfo key={station.id}
               station={station}
-              onDeleteStation={
-                stationId =>
-                setStationList(stationList.filter(station=>
-                  station.id !== stationId ))}  onChooseStation={
+           onChooseStation={
                     stationId =>
                     setDestination(station.stationName+"  "+stationId)} 
             />
