@@ -56,35 +56,35 @@ export default function Menu()  {
             <Route path="/editstations" exact component={AddStation} />
             {/*<Route path="/allstations" exact component={Stations} />*/}
 
-            <Route path="/editroutes" exact component={RoutesScreen} />
-            <Route path="/editstations" exact component={AddStation} />
-            <Route path="/edittransporations" exact component={TransScreen} />
-            <Route path="/edittrips" exact component={TripsScreen} />
-            <Route path="/edittickets" exact component={TicketsScreen} />
-            <Route path="/editcompanies" exact component={CompanyScreen} />
+            {isAuthenticated&&<Route path="/editroutes" exact component={RoutesScreen} />}
+            {isAuthenticated&&<Route path="/editstations" exact component={AddStation} />}
+            {isAuthenticated&&<Route path="/edittransporations" exact component={TransScreen} />}
+            {isAuthenticated&&<Route path="/edittrips" exact component={TripsScreen} />}
+            {isAuthenticated&&<Route path="/edittickets" exact component={TicketsScreen} />}
+            {isAuthenticated&& <Route path="/editcompanies" exact component={CompanyScreen} />}
 
 
            {/*DISPLAY */}
-            <Route path="/alltickets" exact component={AllTickets} />
-            <Route path="/alltrips" exact component={AllTrips} />
-            <Route path="/allstations" exact component={AllStations} />
-            <Route path="/allroutes" exact component={AllRoutes} />
-            <Route path="/allcompanies" exact component={AllCompanies } />
-            <Route path="/alltransporations" exact component={AllTrans } />    
-            <Route path="/allusers" exact component={AllUsers } /> 
-            <Route path="/allpassengers" exact component={AllPassengers } />  
+           {isAuthenticated&&<Route path="/alltickets" exact component={AllTickets} />}
+            {isAuthenticated&&<Route path="/alltrips" exact component={AllTrips} />}
+            {isAuthenticated&&<Route path="/allstations" exact component={AllStations} />}
+            {isAuthenticated&&<Route path="/allroutes" exact component={AllRoutes} />}
+            {isAuthenticated&&<Route path="/allcompanies" exact component={AllCompanies } />}
+            {isAuthenticated&&<Route path="/alltransporations" exact component={AllTrans } />   } 
+            {isAuthenticated&&<Route path="/allusers" exact component={AllUsers } /> }
+            {isAuthenticated&&<Route path="/allpassengers" exact component={AllPassengers } />  }
        
             {/*MANAGE */}
-            <Route path="/managestations" exact component={ManageStationsScreen} />
-            <Route path="/managetickets" exact component={ManageTicketsScreen} />
-            <Route path="/managetransportations" exact component={ManageTransportationsScreen} />
-            <Route path="/manageTrips" exact component={ManageTripsScreen} />
-            <Route path="/manageUsers" exact component={ManageUsersScreen} />
-            <Route path="/managecompanies" exact component={ManageCompaniesScreen} />
-            <Route path="/managepassengers" exact component={ManagePassengersScreen} />
-            <Route path="/manageroutes" exact component={ManageRoutesScreen} />
-            {isLoading&&isAuthenticated&& (<Route path="*" component={YetMatchPage}/> )}
-            {!isLoading && (<Route path="*" component={NoMatchPage} />)}
+            {isAuthenticated&&<Route path="/managestations" exact component={ManageStationsScreen} />}
+            {isAuthenticated&&<Route path="/managetickets" exact component={ManageTicketsScreen} />}
+            {isAuthenticated&&<Route path="/managetransportations" exact component={ManageTransportationsScreen} />}
+            {isAuthenticated&&<Route path="/manageTrips" exact component={ManageTripsScreen} />}
+            {isAuthenticated&&<Route path="/manageUsers" exact component={ManageUsersScreen} />}
+            {isAuthenticated&&<Route path="/managecompanies" exact component={ManageCompaniesScreen} />}
+            {isAuthenticated&&<Route path="/managepassengers" exact component={ManagePassengersScreen} />}
+            {isAuthenticated&&<Route path="/manageroutes" exact component={ManageRoutesScreen} />}
+            {(<Route path="*" component={YetMatchPage}/> )}
+            {!isLoading&&<Route path="*" component={YetMatchPage} />}
            
           </Switch>
         </div>

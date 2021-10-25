@@ -11,8 +11,8 @@ export const StationsContext = createContext();
 
 export const StationsContextProvider = ({ children }) => {
   const [keyword, setKeyword] = useState("Arba Minch");
-  const [keyword1, setKeyword1] = useState("station1");
-  const [keyword2, setKeyword2] = useState("station2");
+  const [keyword1, setKeyword1] = useState("");
+  const [keyword2, setKeyword2] = useState("");
   const [boardingTime, setBoardingTime]=useState(new String(new Date()));
   const [mstations, setMStations] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,9 +29,9 @@ export const StationsContextProvider = ({ children }) => {
 
   const onSearch = (searchKeyword,id) => {
     setIsLoading(true);
-    if(id==1){setKeyword(searchKeyword);setKeyword1(null);setKeyword2(null)}
-    else if(id==2) {setKeyword1(searchKeyword);setKeyword(null);setKeyword2(null)}
-    else if (id==3){setKeyword2(searchKeyword);setKeyword(null);setKeyword1(null)}
+    if(id===1){setKeyword(searchKeyword);setKeyword1(null);setKeyword2(null)}
+    else if(id===2) {setKeyword1(searchKeyword);setKeyword(null);setKeyword2(null)}
+    else if (id===3){setKeyword2(searchKeyword);setKeyword(null);setKeyword1(null)}
    
 
     MStationsRequest(keyword&&keyword.toLowerCase()||keyword1&&keyword1.toLowerCase()||keyword2&&keyword2.toLowerCase())
@@ -51,7 +51,6 @@ export const StationsContextProvider = ({ children }) => {
     fetchData()
       .then((result) => {
         setStationList(result);
-      
       })
       .catch((err) => {
         console.log(err);
@@ -72,147 +71,174 @@ export const StationsContextProvider = ({ children }) => {
 
         return new Promise((resolve, reject)=>{
           
-          if(!data) {
+          if(!stationList) {
 
             reject("Stations Not Found");
         }
   
-        resolve(data);
+        resolve(stationList);
         }
           
           );
     
-      },[]);
+      },[stationList]);
 
       const fetchRoutes=useCallback(()=>{
+        setIsLoading(true);
         fetch('http://192.168.1.67:8080/routes')
         .then(response =>response.json())
         .then(data=>
-          {setRouteList(data); }).catch((err)=>console.log(err))
+          {setRouteList(data);   setIsLoading(false);}).catch((err)=>console.log(err))
   
           return new Promise((resolve, reject)=>{
             
-            if(!data) {
+            if(!routeList) {
   
               reject("Routes Not Found");
           }
     
-          resolve(data);
+          resolve(routeList);
           }
             
             );
       
-        },[]);
+        },[routeList]);
 
         const fetchCompanies=useCallback(()=>{
+          setIsLoading(true);
           fetch('http://192.168.1.67:8080/company')
           .then(response =>response.json())
           .then(data=>
-            {setCompanyList(data); }).catch((err)=>console.log(err))
+            {setCompanyList(data);  setIsLoading(false); }).catch((err)=>console.log(err))
     
             return new Promise((resolve, reject)=>{
               
-              if(!data) {
+              if(!companyList) {
     
                 reject("Companies Not Found");
             }
       
-            resolve(data);
+            resolve(companyList);
             }
               
               );
         
-          },[]);
-          const fetchTransportataions=useCallback(()=>{
+          },[companyList]);
+          const fetchTransportations=useCallback(()=>{
+            setIsLoading(true);
             fetch('http://192.168.1.67:8080/trans')
             .then(response =>response.json())
             .then(data=>
-              {setTransList(data); }).catch((err)=>console.log(err))
+              {setTransList(data);  setIsLoading(false); }).catch((err)=>console.log(err))
       
               return new Promise((resolve, reject)=>{
                 
-                if(!data) {
+                if(!transList) {
       
                   reject("Transportations Not Found");
               }
         
-              resolve(data);
+              resolve(transList);
               }
                 
                 );
           
-            },[]);
+            },[transList]);
 
             const fetchTrips=useCallback(()=>{
+              setIsLoading(true);
               fetch('http://192.168.1.67:8080/trip/trips')
               .then(response =>response.json())
               .then(data=>
-                {setTripList(data); }).catch((err)=>console.log(err))
+                {setTripList(data);   setIsLoading(false);}).catch((err)=>console.log(err))
         
                 return new Promise((resolve, reject)=>{
                   
-                  if(!data) {
+                  if(!tripList) {
         
                     reject("Transportations Not Found");
                 }
           
-                resolve(data);
+                resolve(tripList);
                 }
                   
                   );
             
-              },[]);
+              },[tripList]);
 
               
               
             const fetchUsers=useCallback(()=>{
+              setIsLoading(true);
               fetch('http://192.168.1.67:8080/users')
               .then(response =>response.json())
               .then(data=>
-                {setUserList(data); }).catch((err)=>console.log(err))
+                {setUserList(data);   setIsLoading(false);}).catch((err)=>console.log(err))
         
                 return new Promise((resolve, reject)=>{
                   
-                  if(!data) {
+                  if(!userList) {
         
                     reject("Users Not Found");
                 }
           
-                resolve(data);
+                resolve(userList);
                 }
                   
                   );
             
-              },[]);
+              },[userList]);
 
               const fetchPassengers=useCallback(()=>{
+                setIsLoading(true);
                 fetch('http://192.168.1.67:8080/passengers')
                 .then(response =>response.json())
                 .then(data=>
-                  {setPasseList(data); }).catch((err)=>console.log(err))
+                  {setPasseList(data);  setIsLoading(false); }).catch((err)=>console.log(err))
           
                   return new Promise((resolve, reject)=>{
                     
-                    if(!data) {
+                    if(!passeList) {
           
                       reject("Passengers Not Found");
                   }
             
-                  resolve(data);
+                  resolve(passeList);
                   }
                     
                     );
               
-                },[]);
+                },[passeList]);
     
   
-      useEffect(()=>{fetchData(); 
-        fetchRoutes();
-        fetchCompanies();
-        fetchTransportataions();
-        fetchTrips();
-        fetchUsers();
+      useEffect(()=>{
         fetchPassengers();
+      },[]);
+
+      useEffect(()=>{
+        fetchUsers();
+      },[]);
+
+
+      useEffect(()=>{
+        fetchTrips();
+      },[]);
+
+      useEffect(()=>{
+        fetchTransportations();
+      },[]);
+
+      useEffect(()=>{
+        fetchCompanies();
+      },[]);
+
+
+      useEffect(()=>{
+        fetchData();
+      },[]);
+
+      useEffect(()=>{
+        fetchRoutes();
       },[]);
   return (
     <StationsContext.Provider

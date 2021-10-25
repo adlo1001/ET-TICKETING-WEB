@@ -57,12 +57,10 @@ export default function App()  {
        
        <StationsContextProvider>
           <TripsContextProvider>
-  
            <AuthenticationContextProvider>
         <NavBar/> 
         <Menu/>
         </AuthenticationContextProvider>
-        
         </TripsContextProvider>
         </StationsContextProvider>
       </Router>

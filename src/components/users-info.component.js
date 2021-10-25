@@ -2,6 +2,7 @@ import { BiTrash,BiAddToQueue } from "react-icons/bi"
 
 
 export const UserInfo = ({ user ,onDeleteUser, onChooseUser}) => {
+  const address_ = user.addresses;
   return (
     <li className="px-3 py-3 flex items-start">
       <button onClick={()=>onDeleteUser(user.id)} type="button"
@@ -15,15 +16,25 @@ export const UserInfo = ({ user ,onDeleteUser, onChooseUser}) => {
         <div><b className="font-bold text-blue-500">First Name:</b> {user.firstName}</div>
         <div className="leading-tight"><b className="text-blue-500">Second Name:</b>{user.middleName}</div>
         <div className="leading-tight"><b className="text-blue-500">Last Name:</b>{user.lastName}</div>
-        <div className="leading-tight"><b className="text-blue-500">ROLE</b>user{user._role}</div>
+        <div className="leading-tight"><b className="text-blue-500">ROLE</b>{user._role}</div>
 
-        <div className="leading-tight"><b className="text-blue-500">: </b>{user.addresses.email}</div>
-        <div className="leading-tight"><b className="text-blue-500">Phone:</b> {user.addresses.phone1}</div>
-        <div className="leading-tight"><b className="text-blue-500">Phone:</b> {user.addresses.phone2}</div>
-        <div className="leading-tight"><b className="text-blue-500">Phone:</b> {user.addresses.phone3}</div>
-        <div className="leading-tight"><b className="text-blue-500">House No.:</b>{user.addresses.houseNumber}</div>
-        <div className="leading-tight"><b className="text-blue-500">House No.:</b>{user.addresses.streetAddress}  
+        {
+        address_.map((data) => 
+        
+        <div>
+        
+        <div className="leading-tight"><b className="text-blue-500">E-Mail: </b>{data.email}</div>
+        <div className="leading-tight"><b className="text-blue-500">Phone 1:</b> {data.phone1}</div>
+        <div className="leading-tight"><b className="text-blue-500">Phone 2:</b> {data.phone2}</div>
+        <div className="leading-tight"><b className="text-blue-500">Phone 3:</b> {data.phone3}</div>
+        <div className="leading-tight"><b className="text-blue-500">House No.:</b>{data.houseNumber}</div>
+        <div className="leading-tight"><b className="text-blue-500">Street:</b>{data.streetAddress}    
 </div>
+        </div>
+        
+        
+        )
+        }
       </div>
             <div>
       <button onClick={()=>onChooseUser(user.id)} type="button" 

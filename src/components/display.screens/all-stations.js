@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import DatePicker from 'react-date-picker';
 import { StationsContext } from '../../services/stations/stations.context';
 import {StationInfo} from "../station-info.component";
-
+import YetMatchPage from '../not-yet-match-page';
   export const AllStations = () => {
     const clearData ={
       onboarding:'',
@@ -12,7 +12,7 @@ import {StationInfo} from "../station-info.component";
   };
     const [formData, setFormData]=useState(clearData);
     const [error, setError] = useState(null);
-    const {stationList} =useContext(StationsContext);
+    const {isLoading, stationList} =useContext(StationsContext);
  
 
     
@@ -23,7 +23,7 @@ import {StationInfo} from "../station-info.component";
             <div className=" justify-left"><h1>STATIONS</h1></div>
             <div className="m-1 justify-center border border-dark">
                            </div>
-			
+                           {isLoading&&<YetMatchPage/>}
         <div className="m-1 justify-center border border-dark">
         {stationList.map(station => {
 			return (

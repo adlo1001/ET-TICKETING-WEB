@@ -15,6 +15,7 @@ export const TripsContextProvider = ({ children }) => {
   const [trips, setTrips] = useState([]);
   const [alltrips, setAllTrips] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  
   const [error, setError] = useState(null);
   const mstations = useContext(StationsContext);
   const[data, setData] = useState(null);
@@ -59,6 +60,7 @@ export const TripsContextProvider = ({ children }) => {
 
  
    const allTripsRequest=useCallback(()=>{
+    setIsLoading(true);
     fetch('http://192.168.1.67:8080/tickets')
    .then(response =>response.json())
     .then(_data=>
@@ -77,9 +79,11 @@ export const TripsContextProvider = ({ children }) => {
 
 
     const allTripsRequest2 = async () => { 
+      setIsLoading(true);
        try {    const response = await fetch( 'http://192.168.1.67:8080/tickets'    );    
        const json = await response.json();    
        setTrips(json);  
+       setIsLoading(false);
       
       }
       catch (error) {    console.error(error);  }};

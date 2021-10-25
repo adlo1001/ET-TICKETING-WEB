@@ -67,6 +67,9 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
+ const onSetLoading=(arg)=>{
+   setIsLoading(arg);
+ }
   return (
     <AuthenticationContext.Provider
       value={{
@@ -77,6 +80,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         onLogin,
         onRegister,
         onLogout,
+        onSetLoading,
       }}
     >
       {children}

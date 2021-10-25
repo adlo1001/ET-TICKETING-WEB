@@ -1,28 +1,23 @@
-import { useContext, useState } from 'react';
-import DatePicker from 'react-date-picker';
-import { TripsContext } from '../../services/trips/trips.context';
+import { useContext } from 'react';
 import { TripsInfo } from '../trips-info.component';
 import { StationsContext } from '../../services/stations/stations.context';
+import YetMatchPage from '../not-yet-match-page';
 
 
 
 
   export const AllTrips = () => {
-    const clearData ={
-      onboarding:'',
-      destination:'',
    
+    const {isLoading,tripList} =useContext(StationsContext);
   
-  };
-   
-    const {tripList} =useContext(StationsContext);
+    
  
     
     return <>
       <div className="">
             <div className="pt-5">
             <div className=" justify-left"><h1>TRIPS</h1></div>
-       
+            {isLoading&&<YetMatchPage/>}
           {tripList.map(trip => {
 		    	return (
         

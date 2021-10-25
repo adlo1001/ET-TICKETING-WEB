@@ -25,8 +25,16 @@ export const MStationsRequest2=()=>{
     .then(response =>response.json())
     .then(data=>
       {setData(data)}).catch((error)=>setErr(error));
+
+      return new Promise((resolve, reject)=>
+      {
+       if(!data) 
+       reject("Stations not found");
+       resolve(data);
+
+      });
   
-    },[]);
+    },[data]);
    
   return new Promise((resolve, reject)=>{
 
@@ -42,14 +50,5 @@ export const MStationsRequest2=()=>{
 
 
 
-
-export const MStationsTransform = ({ result }) => {
-const formattedResponse = camelize(result);
-const {trip ={}} = camelize(formattedResponse.results)[0];
-const [intialStation, finalStation] = trip;
-
-return {intialStation, finalStation};
-
-};
 
 

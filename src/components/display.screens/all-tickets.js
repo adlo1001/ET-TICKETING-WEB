@@ -2,6 +2,8 @@ import { useContext, useState } from 'react';
 import DatePicker from 'react-date-picker';
 import { TripsContext } from '../../services/trips/trips.context';
 import { TicketsInfo } from '../tickets-info.component';
+import YetMatchPage from "../not-yet-match-page";
+import {AuthenticationContext} from "../../services/authentication/authentication.context"
 
 
 
@@ -15,15 +17,16 @@ import { TicketsInfo } from '../tickets-info.component';
   };
     const [formData, setFormData]=useState(clearData);
     const [error, setError] = useState(null);
-    const {trips, onTripsSearch} =useContext(TripsContext);
- 
+    const {isLoading,trips, onTripsSearch} =useContext(TripsContext);
     
+ 
+   
     return <>
       <div className="">
     
             <div className="pt-5">
             <div className=" justify-left"><h1>TICKETS</h1></div>
-       
+            {isLoading&&<YetMatchPage/>}
           {trips.map(trip => {
 		    	return (
         

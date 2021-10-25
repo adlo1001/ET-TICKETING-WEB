@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { StationsContext } from '../../services/stations/stations.context';
 import {CompanyInfo} from "../companies-info.component";
-
+import YetMatchPage from '../not-yet-match-page';
   export const AllCompanies = () => {
     const clearData ={
       onboarding:'',
@@ -11,7 +11,7 @@ import {CompanyInfo} from "../companies-info.component";
   };
     const [formData, setFormData]=useState(clearData);
     const [error, setError] = useState(null);
-    const {companyList} =useContext(StationsContext);
+    const {isLoading,companyList} =useContext(StationsContext);
 
     return <>
       <div className="">
@@ -20,7 +20,7 @@ import {CompanyInfo} from "../companies-info.component";
             <div className=" justify-left"><h1>TRANSPORATION COMPANIES</h1></div>
             <div className="m-1 justify-center border border-dark">
                            </div>
-			
+                           {isLoading&&<YetMatchPage/>}
         <div className="m-1 justify-center border border-dark">
         {companyList.map(company => {
 			return (
