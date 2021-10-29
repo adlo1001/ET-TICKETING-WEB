@@ -4,7 +4,7 @@ import {NavBar} from "./infrastructure/navigation/nav-bar";
 import {HomeScreen} from "./screen/home.screen";
 import {AddStation} from "./components/stations.component";
 import {StationInfo} from "./components/station-info.component";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 import NoMatchPage from "./components/no-match-page";
 import YetMatchPage from "./components/not-yet-match-page";
 import {AddRoute} from "./components/routes.component";
@@ -37,6 +37,7 @@ import { AllTrans } from "./components/display.screens/all-trans";
 import {AllTrips} from "./components/display.screens/all-trips";
 import { AllUsers } from "./components/display.screens/all-users";
 import { AllPassengers } from "./components/display.screens/all-passengers";
+import { Tickets } from "./components/display.screens/tickets";
 
 
 export default function Menu()  {
@@ -62,10 +63,12 @@ export default function Menu()  {
             {isAuthenticated&&<Route path="/edittrips" exact component={TripsScreen} />}
             {isAuthenticated&&<Route path="/edittickets" exact component={TicketsScreen} />}
             {isAuthenticated&& <Route path="/editcompanies" exact component={CompanyScreen} />}
+           
 
 
            {/*DISPLAY */}
-           {isAuthenticated&&<Route path="/alltickets" exact component={AllTickets} />}
+            {isAuthenticated&&<Route path="/alltickets" exact component={AllTickets} />}
+            {isAuthenticated&&<Route path="/tickets" exact component={Tickets} />}
             {isAuthenticated&&<Route path="/alltrips" exact component={AllTrips} />}
             {isAuthenticated&&<Route path="/allstations" exact component={AllStations} />}
             {isAuthenticated&&<Route path="/allroutes" exact component={AllRoutes} />}

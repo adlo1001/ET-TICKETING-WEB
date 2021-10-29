@@ -34,7 +34,7 @@ export const StationsContextProvider = ({ children }) => {
     else if (id===3){setKeyword2(searchKeyword);setKeyword(null);setKeyword1(null)}
    
 
-    MStationsRequest(keyword&&keyword.toLowerCase()||keyword1&&keyword1.toLowerCase()||keyword2&&keyword2.toLowerCase())
+    MStationsRequest(keyword.toLowerCase()||keyword1.toLowerCase()||keyword2.toLowerCase())
       .then((result) => {
         setIsLoading(false);
         setMStations(result);   

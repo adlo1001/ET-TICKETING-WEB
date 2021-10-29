@@ -12,7 +12,8 @@ import { StationsContext } from "../stations/stations.context";
 export const TripsContext = createContext();
 
 export const TripsContextProvider = ({ children }) => {
-  const [trips, setTrips] = useState([]);
+  const [alltickets, setAllTickets] = useState([]);
+  const[availabletickets, setAvailableTickets]=useState([]);
   const [alltrips, setAllTrips] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -25,32 +26,36 @@ export const TripsContextProvider = ({ children }) => {
   const [initial, setInitial]=useState(keyword1);
   const [final_, setFinal_]=useState(keyword2);
   
-  const retrieveStations = (mstat) => {
+  const retrieveTickets = () => {
     setIsLoading(true);
     //setTrips(null);
     setTimeout(() => {
-        //if(initial!=null && final_!=null)
-        //tripsRequest(initial,final_, boardingTime)
-        allTripsRequest2();
+        if(initial!=null && final_!=null)
+          tripsRequest(initial,final_, boardingTime)
+        
+          allTripsRequest2();
+      
     }, 2000);
   
   };
   useEffect(() => {
     setInitial(keyword1);
     setFinal_(keyword2);
-    retrieveStations(mstations.keyword);
-  }, [mstations]);
+    retrieveTickets();
+  }, []);
 
+  
 
     const tripsRequest=useCallback((_initial,_final,boardingTime)=>{
+      setInitial(_initial);
+      setFinal_(_final);
       fetch('http://192.168.1.67:8080/ticketsQuery/?_initial='+ _initial +'&_boarding_time='+boardingTime+'&_final='+_final)
         .then(response =>response.json())
       .then(data=>
         {
       setIsLoading(false);
       setData(data);
-      if(data!="")setTrips(data);
-      
+      setAvailableTickets(data); 
     })
       .catch((error)=>{setError(error);});
       
@@ -82,7 +87,7 @@ export const TripsContextProvider = ({ children }) => {
       setIsLoading(true);
        try {    const response = await fetch( 'http://192.168.1.67:8080/tickets'    );    
        const json = await response.json();    
-       setTrips(json);  
+       setAllTickets(json);  
        setIsLoading(false);
       
       }
@@ -92,7 +97,8 @@ export const TripsContextProvider = ({ children }) => {
   return (
     <TripsContext.Provider
       value={{
-        trips,
+        trips:alltickets,
+        availabletickets,
         isLoading,
         onTripsSearch:tripsRequest,
         error,

@@ -9,6 +9,8 @@ import { ManageTripsScreen } from "../components/manage.screens/trips.manage";
 import {StationsContext}  from "../services/stations/stations.context";
 import {TripsContext} from "../services/trips/trips.context";
 import {AllTrips} from "../components/display.screens/all-trips";
+import { Tickets } from "../components/display.screens/tickets";
+
 
 
 export const HomeScreen=()=> {
@@ -36,13 +38,7 @@ export const HomeScreen=()=> {
 const [formData, setFormData]=useState(clearData);
 
 const onSendTrip =(tripinfo)=>{
-  window.open("/alltickets")?.focus();
-{/*
-  return (
-    <div className="container-fluid">
-     <Route exact path="/manageTrips/:onboarding/:destination/:daprtureDate"  component={AllTrips}/>
-    </div>
-  );*/}
+  window.open("/tickets")?.focus();
 }
 const formDataPublish =()=>{
   const tripInfo ={
@@ -51,7 +47,13 @@ const formDataPublish =()=>{
   departureDate:formData.departureDate,
 
   }
+  setTimeout(() => {
+    onTripsSearch(onboarding, destination,departureDate);
+  }, 2000);
+
   onSendTrip(tripInfo);
+  
+
 }
 
 
@@ -100,15 +102,14 @@ const formDataPublish =()=>{
       {
         !!error && <h5 className="text-1xl mb-2 " > {error}</h5>
       }
-
       <div className="pt-5">
             <div className="flex justify-end">
               <button type="submit" 
                onClick={()=>{
-                 
                 if(destination!=="" && onboarding!=="" &&departureDate!==null) 
                 {formDataPublish();
                   setError(null);
+              
     
               }else 
                 setError("Please enter all values");
@@ -128,7 +129,7 @@ const formDataPublish =()=>{
           
                   onChooseStation={
                     stationId =>
-                    setOnboarding(station.stationName +"  " +stationId)}
+                    setOnboarding(station.stationName)}
             />
           ))
         }
@@ -140,7 +141,7 @@ const formDataPublish =()=>{
               station={station}
            onChooseStation={
                     stationId =>
-                    setDestination(station.stationName+"  "+stationId)} 
+                    setDestination(station.stationName)} 
             />
           ))
         }
