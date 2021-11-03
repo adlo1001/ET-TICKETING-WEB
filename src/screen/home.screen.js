@@ -53,7 +53,6 @@ const formDataPublish =()=>{
 
   onSendTrip(tripInfo);
   
-
 }
 
 
@@ -106,7 +105,9 @@ const formDataPublish =()=>{
             <div className="flex justify-end">
               <button type="submit" 
                onClick={()=>{
-                if(destination!=="" && onboarding!=="" &&departureDate!==null) 
+                 
+                if((onboaridngQuery!==""&&destinationQuery!=="")
+                ||(destination!=="" && onboarding!=="" &&departureDate!==null)) 
                 {formDataPublish();
                   setError(null);
               

@@ -22,9 +22,10 @@ export const TripsContextProvider = ({ children }) => {
   const[data, setData] = useState(null);
   const[allData, setAllData] = useState(null);
   //const [boarding, setBoarding]=useState("2021-10-18 15:00:00");
-  const {boardingTime, keyword1, keyword2 } = useContext(StationsContext);
+  const {boardingTime, keyword1, keyword2} = useContext(StationsContext);
   const [initial, setInitial]=useState(keyword1);
   const [final_, setFinal_]=useState(keyword2);
+  const [URL]=useState('http://192.168.1.67:8080');
   
   const retrieveTickets = () => {
     setIsLoading(true);
@@ -49,7 +50,7 @@ export const TripsContextProvider = ({ children }) => {
     const tripsRequest=useCallback((_initial,_final,boardingTime)=>{
       setInitial(_initial);
       setFinal_(_final);
-      fetch('http://192.168.1.67:8080/ticketsQuery/?_initial='+ _initial +'&_boarding_time='+boardingTime+'&_final='+_final)
+      fetch(URL+'/ticketsQuery/?_initial='+ _initial +'&_boarding_time='+boardingTime+'&_final='+_final)
         .then(response =>response.json())
       .then(data=>
         {
@@ -66,7 +67,7 @@ export const TripsContextProvider = ({ children }) => {
  
    const allTripsRequest=useCallback(()=>{
     setIsLoading(true);
-    fetch('http://192.168.1.67:8080/tickets')
+    fetch(URL+'/tickets')
    .then(response =>response.json())
     .then(_data=>
       {setAllData(_data); console.log(_data[0])}).catch((error)=>{setError(error);console.log(error)});
@@ -85,7 +86,7 @@ export const TripsContextProvider = ({ children }) => {
 
     const allTripsRequest2 = async () => { 
       setIsLoading(true);
-       try {    const response = await fetch( 'http://192.168.1.67:8080/tickets'    );    
+       try {    const response = await fetch( URL+'/tickets');    
        const json = await response.json();    
        setAllTickets(json);  
        setIsLoading(false);

@@ -17,6 +17,7 @@ export const StationsContextProvider = ({ children }) => {
   const [mstations, setMStations] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMessage]=useState(null);
   const [data, setData] = useState([]);
   const [stationList, setStationList]=useState([]);
   const [routeList, setRouteList]=useState([]);
@@ -25,6 +26,7 @@ export const StationsContextProvider = ({ children }) => {
   const [tripList, setTripList]= useState([]);
   const [userList, setUserList]= useState([]);
   const [passeList, setPasseList]= useState([]);
+  const [URL]=useState('http://192.168.1.67:8080');
 
 
   const onSearch = (searchKeyword,id) => {
@@ -48,7 +50,7 @@ export const StationsContextProvider = ({ children }) => {
   };
 
   const onType = () =>  {
-    fetchData()
+    fetchStations()
       .then((result) => {
         setStationList(result);
       })
@@ -63,8 +65,8 @@ export const StationsContextProvider = ({ children }) => {
   setBoardingTime(_time); 
   };
    
-    const fetchData=useCallback(()=>{
-      fetch('http://192.168.1.67:8080/stations')
+    const fetchStations=useCallback(()=>{
+      fetch(URL+'/stations')
       .then(response =>response.json())
       .then(data=>
         {setStationList(data); setData(data);}).catch((err)=>console.log(err))
@@ -85,7 +87,7 @@ export const StationsContextProvider = ({ children }) => {
 
       const fetchRoutes=useCallback(()=>{
         setIsLoading(true);
-        fetch('http://192.168.1.67:8080/routes')
+        fetch(URL+'/routes')
         .then(response =>response.json())
         .then(data=>
           {setRouteList(data);   setIsLoading(false);}).catch((err)=>console.log(err))
@@ -106,7 +108,7 @@ export const StationsContextProvider = ({ children }) => {
 
         const fetchCompanies=useCallback(()=>{
           setIsLoading(true);
-          fetch('http://192.168.1.67:8080/company')
+          fetch(URL+'/company')
           .then(response =>response.json())
           .then(data=>
             {setCompanyList(data);  setIsLoading(false); }).catch((err)=>console.log(err))
@@ -126,7 +128,7 @@ export const StationsContextProvider = ({ children }) => {
           },[companyList]);
           const fetchTransportations=useCallback(()=>{
             setIsLoading(true);
-            fetch('http://192.168.1.67:8080/trans')
+            fetch(URL+'/trans')
             .then(response =>response.json())
             .then(data=>
               {setTransList(data);  setIsLoading(false); }).catch((err)=>console.log(err))
@@ -147,7 +149,7 @@ export const StationsContextProvider = ({ children }) => {
 
             const fetchTrips=useCallback(()=>{
               setIsLoading(true);
-              fetch('http://192.168.1.67:8080/trip/trips')
+              fetch(URL+'/trip/trips')
               .then(response =>response.json())
               .then(data=>
                 {setTripList(data);   setIsLoading(false);}).catch((err)=>console.log(err))
@@ -170,7 +172,7 @@ export const StationsContextProvider = ({ children }) => {
               
             const fetchUsers=useCallback(()=>{
               setIsLoading(true);
-              fetch('http://192.168.1.67:8080/users')
+              fetch(URL+'/users')
               .then(response =>response.json())
               .then(data=>
                 {setUserList(data);   setIsLoading(false);}).catch((err)=>console.log(err))
@@ -191,7 +193,7 @@ export const StationsContextProvider = ({ children }) => {
 
               const fetchPassengers=useCallback(()=>{
                 setIsLoading(true);
-                fetch('http://192.168.1.67:8080/passengers')
+                fetch(URL+'/passengers')
                 .then(response =>response.json())
                 .then(data=>
                   {setPasseList(data);  setIsLoading(false); }).catch((err)=>console.log(err))
@@ -209,6 +211,39 @@ export const StationsContextProvider = ({ children }) => {
                     );
               
                 },[passeList]);
+
+
+                const addStation=(__station)=>{
+               const  _station={id:0, stationName:"Dessie", city:"Dessie",region:"Amhara",subcity:"",description:"Dessie", Province:"Wollo"};
+                  fetch(URL+'/stations/', 
+                  {  method: 'POST',  
+                     headers: {    Accept: 'application/json',    'Content-Type': 'application/json' 
+                     //,'Access-Control-Allow-Origin':'*'
+                     ,'Access-Control-Allow-Methods':'DELETE, POST, GET'
+                     //'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+                    },  
+                     body: JSON.stringify({    
+                     "stationName": _station[1],
+                     "city": _station[2],
+                     "region": _station[3],
+                     "subcity": _station[4],
+                     "description": _station[5],
+                     "province": _station[6],
+                        })}).then((response)=>setMessage(response)).catch((error)=>setError(error));
+                   
+                        return new Promise((resolve, reject)=>{
+                          if(!message) {
+                     
+                                 reject("Error - Stations not Save");
+                             }
+                       
+                             //resolve(response);
+                             })
+              
+                           
+
+                        
+                      }
     
   
       useEffect(()=>{
@@ -234,7 +269,7 @@ export const StationsContextProvider = ({ children }) => {
 
 
       useEffect(()=>{
-        fetchData();
+        fetchStations();
       },[]);
 
       useEffect(()=>{
@@ -243,6 +278,7 @@ export const StationsContextProvider = ({ children }) => {
   return (
     <StationsContext.Provider
       value={{
+        URL,
         mstations,
         isLoading,
         error,
@@ -260,6 +296,7 @@ export const StationsContextProvider = ({ children }) => {
         tripList,
         userList,
         passeList,
+        onStationAdd:addStation,
       }}
     >
       {children}

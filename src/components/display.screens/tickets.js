@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import DatePicker from 'react-date-picker';
 import { TripsContext } from '../../services/trips/trips.context';
-import { TicketsInfo } from '../tickets-info.component';
+import { TicketsInfo } from '../tickets-info-2.component';
 import YetMatchPage from "../not-yet-match-page";
 import {AuthenticationContext} from "../../services/authentication/authentication.context"
 
@@ -13,13 +13,11 @@ import {AuthenticationContext} from "../../services/authentication/authenticatio
       onboarding:'',
       destination:'',
    
-  
   };
     const [formData, setFormData]=useState(clearData);
     const [error, setError] = useState(null);
     const {isLoading,availabletickets,trips, onTripsSearch} =useContext(TripsContext);
     
-    console.log(availabletickets);
     return <>
       <div className="">
     
@@ -37,9 +35,5 @@ import {AuthenticationContext} from "../../services/authentication/authenticatio
 
           </div>
           </div>
-      
-      
-      
-     
     </>
   };
